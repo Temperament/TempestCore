@@ -41,10 +41,8 @@ namespace TempestCoreAuth
                 Environment.Exit(0);
             };
 
-            Stopwatch packetms = Stopwatch.StartNew();
             _packetLogger.Load("auth_packets.log");
-            packetms.Stop();
-            _logger.Info("Loaded Packet Logger in {0} ms", packetms.Elapsed.TotalMilliseconds);
+            _logger.Info("Loaded Packet Logger");
 
             Stopwatch sw = Stopwatch.StartNew();
             AuthConfig.Load();
@@ -57,17 +55,33 @@ namespace TempestCoreAuth
             _server.PacketReceived += HandlePacket;
             _server.Error += Error;
 
-            ushort port1 = 38915;
-            _natServer = new UDPClient(port1);
-            _natServer.PacketReceived += HandleNATTest;
-            _natServer.Error += Error;
-            _logger.InfoAuth("Listening from port {0}", port1);
+            //
+            // Initalize a list of ports
+            //
 
-            ushort port2 = 38917;
-            _natServer2 = new UDPClient(port2);
-            _natServer2.PacketReceived += HandleNATTest2;
-            _natServer2.Error += Error;
-            _logger.InfoAuth("Listening from port {0}", port2);
+            ushort[] ports = { 38915, 38917 };
+
+            for (uint i = 0; ports.Length > i; i++ )
+            {
+                // Handle first NAT Test
+                switch (i)
+                {
+                    case 0:
+                        _natServer = new UDPClient(ports[0]);
+                        _natServer.PacketReceived += HandleNATTest;
+                        _natServer.Error += Error;
+                        _logger.InfoAuth("Listening from port {0}", ports[0]);
+                        break;
+                    case 1:
+                        _natServer2 = new UDPClient(ports[1]);
+                        _natServer2.PacketReceived += HandleNATTest2;
+                        _natServer2.Error += Error;
+                        _logger.InfoAuth("Listening from port {0}", ports[1]);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             var isMono = Type.GetType("Mono.Runtime") != null;
             switch (AuthConfig.Instance.Remote.Binding)
