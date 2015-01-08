@@ -1,6 +1,0 @@
-C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCoreGame.exe.config
-C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCoreGame.exe
-C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCoreGame.pdb
-C:\Users\Jimmy\Desktop\TempestCore\TempestCoreGame\obj\Release\TempestCoreGame.csprojResolveAssemblyReference.cache
-C:\Users\Jimmy\Desktop\TempestCore\TempestCoreGame\obj\Release\TempestCoreGame.exe
-C:\Users\Jimmy\Desktop\TempestCore\TempestCoreGame\obj\Release\TempestCoreGame.pdb

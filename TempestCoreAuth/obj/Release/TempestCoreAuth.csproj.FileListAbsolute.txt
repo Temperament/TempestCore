@@ -1,6 +1,0 @@
-C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCoreAuth.exe.config
-C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCoreAuth.exe
-C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCoreAuth.pdb
-C:\Users\Jimmy\Desktop\TempestCore\TempestCoreAuth\obj\Release\TempestCoreAuth.csprojResolveAssemblyReference.cache
-C:\Users\Jimmy\Desktop\TempestCore\TempestCoreAuth\obj\Release\TempestCoreAuth.exe
-C:\Users\Jimmy\Desktop\TempestCore\TempestCoreAuth\obj\Release\TempestCoreAuth.pdb

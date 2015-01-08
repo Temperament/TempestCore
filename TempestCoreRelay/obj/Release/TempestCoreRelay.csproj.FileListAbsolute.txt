@@ -1,6 +1,0 @@
-C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCoreRelay.exe.config
-C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCoreRelay.exe
-C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCoreRelay.pdb
-C:\Users\Jimmy\Desktop\TempestCore\TempestCoreRelay\obj\Release\TempestCoreRelay.csprojResolveAssemblyReference.cache
-C:\Users\Jimmy\Desktop\TempestCore\TempestCoreRelay\obj\Release\TempestCoreRelay.exe
-C:\Users\Jimmy\Desktop\TempestCore\TempestCoreRelay\obj\Release\TempestCoreRelay.pdb

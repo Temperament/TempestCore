@@ -1,6 +1,0 @@
-C:\Users\Jimmy\Desktop\TempestCore\TempestCore\Release\TempestCoreChat.exe.config
-C:\Users\Jimmy\Desktop\TempestCore\TempestCore\Release\TempestCoreChat.exe
-C:\Users\Jimmy\Desktop\TempestCore\TempestCore\Release\TempestCoreChat.pdb
-C:\Users\Jimmy\Desktop\TempestCore\TempestCore\TempestCoreChat\obj\Release\TempestCoreChat.csprojResolveAssemblyReference.cache
-C:\Users\Jimmy\Desktop\TempestCore\TempestCore\TempestCoreChat\obj\Release\TempestCoreChat.exe
-C:\Users\Jimmy\Desktop\TempestCore\TempestCore\TempestCoreChat\obj\Release\TempestCoreChat.pdb
