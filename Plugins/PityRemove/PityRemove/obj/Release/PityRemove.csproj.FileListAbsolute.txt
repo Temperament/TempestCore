@@ -1,0 +1,5 @@
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\Release\PityRemove.dll
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\Release\PityRemove.pdb
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\PityRemove\PityRemove\obj\Release\PityRemove.csprojResolveAssemblyReference.cache
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\PityRemove\PityRemove\obj\Release\PityRemove.dll
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\PityRemove\PityRemove\obj\Release\PityRemove.pdb

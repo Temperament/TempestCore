@@ -1,0 +1,7 @@
+C:\Users\Jimmy\Desktop\TempestCore\FagNet\Release\Plugins\RemoveStats.dll
+C:\Users\Jimmy\Desktop\TempestCore\FagNet\Release\Plugins\RemoveStats.pdb
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\RemoveStats\RemoveStats\obj\Release\RemoveStats.csprojResolveAssemblyReference.cache
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\RemoveStats\RemoveStats\obj\Release\RemoveStats.dll
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\RemoveStats\RemoveStats\obj\Release\RemoveStats.pdb
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\Release\RemoveStats.dll
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\Release\RemoveStats.pdb

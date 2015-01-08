@@ -1,0 +1,5 @@
+C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCore.Core.dll
+C:\Users\Jimmy\Desktop\TempestCore\Release\TempestCore.Core.pdb
+C:\Users\Jimmy\Desktop\TempestCore\TempestCore.Core\obj\Release\TempestCore.Core.csprojResolveAssemblyReference.cache
+C:\Users\Jimmy\Desktop\TempestCore\TempestCore.Core\obj\Release\TempestCore.Core.dll
+C:\Users\Jimmy\Desktop\TempestCore\TempestCore.Core\obj\Release\TempestCore.Core.pdb

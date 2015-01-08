@@ -1,0 +1,5 @@
+C:\Users\Jimmy\Desktop\TempestCore\TempestCore.Core\bin\Debug\TempestCore.Core.dll
+C:\Users\Jimmy\Desktop\TempestCore\TempestCore.Core\bin\Debug\TempestCore.Core.pdb
+C:\Users\Jimmy\Desktop\TempestCore\TempestCore.Core\bin\Debug\MySql.Data.dll
+C:\Users\Jimmy\Desktop\TempestCore\TempestCore.Core\obj\Debug\TempestCore.Core.dll
+C:\Users\Jimmy\Desktop\TempestCore\TempestCore.Core\obj\Debug\TempestCore.Core.pdb

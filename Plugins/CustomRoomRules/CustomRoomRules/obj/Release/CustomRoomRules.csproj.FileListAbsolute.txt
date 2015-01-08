@@ -1,0 +1,7 @@
+C:\Users\Jimmy\Desktop\TempestCore\FagNet\Release\Plugins\CustomRoomRules.dll
+C:\Users\Jimmy\Desktop\TempestCore\FagNet\Release\Plugins\CustomRoomRules.pdb
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\CustomRoomRules\CustomRoomRules\obj\Release\CustomRoomRules.csprojResolveAssemblyReference.cache
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\CustomRoomRules\CustomRoomRules\obj\Release\CustomRoomRules.dll
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\CustomRoomRules\CustomRoomRules\obj\Release\CustomRoomRules.pdb
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\Release\CustomRoomRules.dll
+C:\Users\Jimmy\Desktop\TempestCore\Plugins\Release\CustomRoomRules.pdb
