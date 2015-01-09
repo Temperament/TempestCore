@@ -257,42 +257,71 @@ namespace TempestCoreAuth
 
         private void HandleAuthRequest(TcpSession session, Packet p)
         {
+            var ack = new Packet(EAuthPacket.SAuthAck);
+
             var ip = session.Client.Client.RemoteEndPoint as IPEndPoint;
             var username = p.ReadCStringBuffer(13);
             var password = p.ReadCString();
-
             // SHA256 encoding
             password = SHA256.ComputeHash(password);
 
-            var ack = new Packet(EAuthPacket.SAuthAck);
+            //TODO: Implement IP logging options to MySQL after failed handshaking attempts
 
-            if (!AuthDatabase.Instance.ValidateAccount(username, password))
+            String[] userDetails = { username, password };
+            
+            if (!AuthDatabase.Instance.ValidateAccount(userDetails[0], userDetails[1]))
             {
-                _logger.Error("Failed login for Username: {0}", username);
-                ack.Write((uint)0);
-                ack.Write(new byte[12]);
-                ack.Write((byte)ELoginResult.AccountError);
-                session.Send(ack);
-                session.StopListening();
+                HandshakeConnection("failed", ip, userDetails[0], userDetails[1], session, ack);
                 return;
             }
+
             if (AuthDatabase.Instance.IsAccountBanned(username))
             {
-                _logger.Error("Banned user attempted to login. Username: {0}", username);
-                ack.Write((uint)0);
-                ack.Write(new byte[12]);
-                ack.Write((byte)ELoginResult.AccountBlocked);
-                session.Send(ack);
-                session.StopListening();
+                HandshakeConnection("banned", ip, userDetails[0], userDetails[1], session, ack);
                 return;
             }
-            var ssession = _sessions.AddSession(AuthDatabase.Instance.GetAccountID(username), ip.Address);
-            _logger.Info("Succesfully authenticated Username: {0} with SessionID: {1}", username, ssession.SessionID);
 
-            ack.Write(ssession.SessionID); // session id
-            ack.Write(new byte[12]); // unk
-            ack.Write((byte)ELoginResult.OK);
-            session.Send(ack);
+            HandshakeConnection("success", ip, userDetails[0], userDetails[1], session, ack);
+        }
+
+        private void HandshakeConnection(string Type, IPEndPoint ip, string username, string password, TcpSession session, Packet ack)
+        {
+            switch (Type)
+            {
+                // Success
+                case "success":
+                    var newSession = _sessions.AddSession(AuthDatabase.Instance.GetAccountID(username), ip.Address);
+                    _logger.Info("Succesfully authenticated Username: {0} with SessionID: {1}", username, newSession.SessionID);
+
+                    ack.Write(newSession.SessionID); // session id
+                    ack.Write(new byte[12]); // unk
+                    ack.Write((byte)ELoginResult.OK);
+                    session.Send(ack);
+                    break;
+
+                // Invalid password/username combination
+                case "failed":
+                    _logger.Error("Failed login for Username: {0}", username);
+                    ack.Write((uint)0);
+                    ack.Write(new byte[12]);
+                    ack.Write((byte)ELoginResult.AccountError);
+                    session.Send(ack);
+                    session.StopListening();
+                    break;
+
+                // Banned account tried to login
+                case "banned":
+                    _logger.Error("Failed login for Username: {0}", username);
+                    ack.Write((uint)0);
+                    ack.Write(new byte[12]);
+                    ack.Write((byte)ELoginResult.AccountBlocked);
+                    session.Send(ack);
+                    session.StopListening();
+                    break;
+                default:
+                    break;
+            }
+     
         }
 
         private static void HandleLoginRequest(TcpSession session, Packet p)
