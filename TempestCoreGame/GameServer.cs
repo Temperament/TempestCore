@@ -2029,9 +2029,9 @@ namespace TempestCoreGame
             //_logger.Debug("-C_RANDOMSHOP_REQ- Category: {0} TypeID: {1}", category, typeID);
 
             var ack = new Packet(EGamePacket.SResultAck);
-            ack.Write((uint)EServerResult.FailedToRequestTask);
-            session.Send(ack);
-            return;
+            //ack.Write((uint)EServerResult.FailedToRequestTask);
+           // session.Send(ack);
+           // return;
 
             // TODO
             ack = new Packet(EGamePacket.SRandomshopItemInfoAck);

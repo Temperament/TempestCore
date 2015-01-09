@@ -63,26 +63,27 @@ namespace TempestCoreAuth
 
             for (uint i = 0; ports.Length > i; i++ )
             {
-                // Handle first NAT Test
+                // Handle NAT tests before starting...
                 switch (i)
                 {
                     case 0:
                         _natServer = new UDPClient(ports[0]);
                         _natServer.PacketReceived += HandleNATTest;
                         _natServer.Error += Error;
-                        _logger.InfoAuth("Listening from port {0}", ports[0]);
+                        _logger.InfoAuth("NAT Test successful at Port {0}", ports[0]);
                         break;
                     case 1:
                         _natServer2 = new UDPClient(ports[1]);
                         _natServer2.PacketReceived += HandleNATTest2;
                         _natServer2.Error += Error;
-                        _logger.InfoAuth("Listening from port {0}", ports[1]);
+                        _logger.InfoAuth("NAT Test successful at Port {0}", ports[1]);
                         break;
                     default:
                         break;
                 }
             }
 
+            // Bind to pipe/tcp/http settings in configuration
             var isMono = Type.GetType("Mono.Runtime") != null;
             switch (AuthConfig.Instance.Remote.Binding)
             {
@@ -120,24 +121,33 @@ namespace TempestCoreAuth
 
         public void Start()
         {
-            _logger.InfoAuth("Connecting to AUTH MySQL database...");
-            Stopwatch mysqltimer = Stopwatch.StartNew();
+            Stopwatch sw = Stopwatch.StartNew();
+            // Connect to MySQL first
             try
-            {
+            {   
+                _logger.InfoAuth("Connecting to AUTH MySQL database...");
                 AuthDatabase.Instance.TryConnect(AuthConfig.Instance.MySQLAuth.Server, AuthConfig.Instance.MySQLAuth.User, AuthConfig.Instance.MySQLAuth.Password, AuthConfig.Instance.MySQLAuth.Database);
             }
             catch (Exception ex)
             {
-                _logger.Error("Could not connect to MySQL database: {0}\r\n{1}",
-                    ex.Message, ex.StackTrace);
+                _logger.Error("Could not connect to MySQL database: {0}\r\n{1}", ex.Message, ex.StackTrace);
                 Environment.Exit(0);
             }
-            mysqltimer.Stop();
+            _logger.InfoAuth("Succesfully connected to {0} ", AuthConfig.Instance.MySQLAuth.Database);
+
+            // Start Remote Server
             _remoteServer.Open();
+            _logger.InfoAuth("Remote server started! Current setting is: {0}", AuthConfig.Instance.Remote.Binding);
+
+            // Start NAT servers
             _natServer.Start();
             _natServer2.Start();
+            _logger.InfoAuth("NAT servers started!");
+            
             _server.Start();
-            _logger.InfoAuth("Auth succesfully connected to {0} ", AuthConfig.Instance.MySQLAuth.Database);
+            
+            sw.Stop();
+            _logger.InfoAuth("Auth Server finished initializing in {0} ms", sw.Elapsed.TotalMilliseconds);
         }
 
         public void Stop()
@@ -149,31 +159,6 @@ namespace TempestCoreAuth
             _server.Stop();
             _logger.Dispose();
             _packetLogger.Dispose();
-        }
-
-        private void HandleNATTest2(object sender, UdpDataReceivedEventArgs e)
-        {
-            var p = new Packet(e.Packet, 2);
-            //_packetLogger.Log<ENATPacket>(p);
-
-            switch (p.PacketID)
-            {
-                case (byte)ENATPacket.Req3:
-                    var addr = p.ReadUInt32();
-                    var port = p.ReadUInt16();
-                    //_logger.Debug("-NAT Test2- ID: {0} IP: {1} Port: {2} | {3}", p.PacketID, new IPAddress(addr), port, e.IPEndPoint.ToString());
-                    
-                    var ack = new Packet(ENATPacket.Ack3);
-                    ack.Write((uint)e.IPEndPoint.Address.Address);
-                    ack.Write((ushort)e.IPEndPoint.Port);
-                    _natServer2.Send(e.IPEndPoint, ack);
-                    break;
-
-                default:
-                    _logger.Warning("-NAT Test2- ID: {0}", p.PacketID);
-                    break;
-
-            }
         }
         private void HandleNATTest(object sender, UdpDataReceivedEventArgs e)
         {
@@ -217,6 +202,31 @@ namespace TempestCoreAuth
 
             }
         }
+        private void HandleNATTest2(object sender, UdpDataReceivedEventArgs e)
+        {
+            var p = new Packet(e.Packet, 2);
+            //_packetLogger.Log<ENATPacket>(p);
+
+            switch (p.PacketID)
+            {
+                case (byte)ENATPacket.Req3:
+                    var addr = p.ReadUInt32();
+                    var port = p.ReadUInt16();
+                    //_logger.Debug("-NAT Test2- ID: {0} IP: {1} Port: {2} | {3}", p.PacketID, new IPAddress(addr), port, e.IPEndPoint.ToString());
+                    
+                    var ack = new Packet(ENATPacket.Ack3);
+                    ack.Write((uint)e.IPEndPoint.Address.Address);
+                    ack.Write((ushort)e.IPEndPoint.Port);
+                    _natServer2.Send(e.IPEndPoint, ack);
+                    break;
+
+                default:
+                    _logger.Warning("-NAT Test2- ID: {0}", p.PacketID);
+                    break;
+
+            }
+        }
+
 
         private void HandlePacket(object sender, PacketReceivedEventArgs e)
         {
@@ -233,7 +243,7 @@ namespace TempestCoreAuth
                     break;
 
                 default:
-                    _logger.Warning("Unkown packet {0}", e.Packet.PacketID.ToString("x2"));
+                    _logger.Warning("Unknown packet {0}", e.Packet.PacketID.ToString("x2"));
                     break;
             }
         }
@@ -248,17 +258,17 @@ namespace TempestCoreAuth
         private void HandleAuthRequest(TcpSession session, Packet p)
         {
             var ip = session.Client.Client.RemoteEndPoint as IPEndPoint;
-
             var username = p.ReadCStringBuffer(13);
             var password = p.ReadCString();
+
+            // SHA256 encoding
             password = SHA256.ComputeHash(password);
 
             var ack = new Packet(EAuthPacket.SAuthAck);
 
-            //_logger.Debug("-C_AUTH_REQ- User: {0}", username);
             if (!AuthDatabase.Instance.ValidateAccount(username, password))
             {
-                _logger.Error("-CAuthReq WRONG- User: {0}", username);
+                _logger.Error("Failed login for Username: {0}", username);
                 ack.Write((uint)0);
                 ack.Write(new byte[12]);
                 ack.Write((byte)ELoginResult.AccountError);
@@ -268,7 +278,7 @@ namespace TempestCoreAuth
             }
             if (AuthDatabase.Instance.IsAccountBanned(username))
             {
-                _logger.Error("-CAuthReq BANNED- User: {0}", username);
+                _logger.Error("Banned user attempted to login. Username: {0}", username);
                 ack.Write((uint)0);
                 ack.Write(new byte[12]);
                 ack.Write((byte)ELoginResult.AccountBlocked);
@@ -277,7 +287,7 @@ namespace TempestCoreAuth
                 return;
             }
             var ssession = _sessions.AddSession(AuthDatabase.Instance.GetAccountID(username), ip.Address);
-            _logger.Info("-CAuthReq SUCCESS- User: {0} SessionID: {1}", username, ssession.SessionID);
+            _logger.Info("Succesfully authenticated Username: {0} with SessionID: {1}", username, ssession.SessionID);
 
             ack.Write(ssession.SessionID); // session id
             ack.Write(new byte[12]); // unk
