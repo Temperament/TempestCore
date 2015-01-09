@@ -45,13 +45,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TempestCore.Core\TempestCore.Core.csproj">
+    <ProjectReference Include="..\..\..\Projects\Framework\Framework.csproj">
       <Project>{eccf4ebf-8042-4007-ac89-17c09db162f0}</Project>
-      <Name>TempestCore.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\TempestCoreGame\TempestCoreGame.csproj">
-      <Project>{75272fd8-a514-4173-83e8-c6d50747eaa0}</Project>
-      <Name>TempestCoreGame</Name>
+      <Name>Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

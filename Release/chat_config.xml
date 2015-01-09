@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<ChatConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <IP>0.0.0.0</IP>
-  <Port>28012</Port>
-  <AuthRemote Server="127.0.0.1" Port="27001" Password="" Binding="pipe" />
-  <MySQLAuth Server="127.0.0.1" User="root" Password="" Database="tempestauth" />
-  <MySQLGame Server="127.0.0.1" User="root" Password="" Database="tempestgame" />
-</ChatConfig>

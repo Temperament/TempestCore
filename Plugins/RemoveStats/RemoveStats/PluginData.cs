@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using TempestCore.Core.Data;
-using TempestCore.Core.Plugin;
+using Framework.Data;
+using Framework.Plugin;
 
 namespace RemoveStats
 {

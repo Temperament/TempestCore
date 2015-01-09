@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using TempestCore.Core.Constants;
-using TempestCore.Core.Constants.Packets;
-using TempestCore.Core.Data;
-using TempestCore.Core.Network;
-using TempestCore.Core.Plugin;
+using Framework.Constants;
+using Framework.Constants.Packets;
+using Framework.Data;
+using Framework.Network;
+using Framework.Plugin;
 
 namespace CustomRoomRules
 {

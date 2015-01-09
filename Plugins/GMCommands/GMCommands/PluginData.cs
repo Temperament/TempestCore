@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Design;
 using System.Linq;
-using TempestCore.Core.Constants.Packets;
-using TempestCore.Core.Data;
-using TempestCore.Core.Database;
-using TempestCore.Core.Network;
-using TempestCore.Core.Plugin;
-using TempestCore.Core.Utils;
-using TempestCoreGame;
+using Framework.Constants;
+using Framework.Constants.Packets;
+using Framework.Cryptography;
+using Framework.Data;
+using Framework.Database;
+using Framework.Network;
+using Framework.Network.Events;
+using Framework.Utils;
+using Framework.Plugin;
+using GameServer;
 
 namespace GMCommands
 {
@@ -99,8 +102,8 @@ namespace GMCommands
                 item.Energy = shopItem.Energy;
                 item.ExpireTime = (shopItem.Time == -1) ? -1 : HelperUtils.GetUnixTimestamp(time.AddSeconds(shopItem.Time));
             }
-
-            var targetPlr = accountID > 0 ? GameServer.Instance.Players.GetPlayerByID(accountID) : GameServer.Instance.Players.GetPlayerByNickname(nickname);
+            
+            var targetPlr = accountID > 0 ? GameServer.GameServer.Instance.Players.GetPlayerByID(accountID) : GameServer.GameServer.Instance.Players.GetPlayerByNickname(nickname);
             if (targetPlr == null)
                 return HelperUtils.GetS4Color(255, 0, 0) + "Player not found.";
 
@@ -137,7 +140,7 @@ namespace GMCommands
             if (args.Length < 2)
                 return _commandDescriptions["broadcast"];
 
-            GameServer.Instance.BroadcastNotice(args[1]);
+            GameServer.GameServer.Instance.BroadcastNotice(args[1]);
             return HelperUtils.GetS4Color(0, 255, 0) + "Done.";
         }
 
@@ -153,7 +156,7 @@ namespace GMCommands
                 return _commandDescriptions["kick"];
 
             if (!ulong.TryParse(args[1], out accountID)) nickname = args[1];
-            var targetPlr = accountID > 0 ? GameServer.Instance.Players.GetPlayerByID(accountID) : GameServer.Instance.Players.GetPlayerByNickname(nickname);
+            var targetPlr = accountID > 0 ? GameServer.GameServer.Instance.Players.GetPlayerByID(accountID) : GameServer.GameServer.Instance.Players.GetPlayerByNickname(nickname);
             if (targetPlr == null)
                 return HelperUtils.GetS4Color(255, 0, 0) + "Player not found.";
             targetPlr.Session.StopListening();
@@ -173,7 +176,7 @@ namespace GMCommands
                 return _commandDescriptions["roomkick"];
 
             if (!ulong.TryParse(args[1], out accountID)) nickname = args[1];
-            var targetPlr = accountID > 0 ? GameServer.Instance.Players.GetPlayerByID(accountID) : GameServer.Instance.Players.GetPlayerByNickname(nickname);
+            var targetPlr = accountID > 0 ? GameServer.GameServer.Instance.Players.GetPlayerByID(accountID) : GameServer.GameServer.Instance.Players.GetPlayerByNickname(nickname);
             if (targetPlr == null)
                 return HelperUtils.GetS4Color(255, 0, 0) + "Player not found.";
             if (targetPlr.Room == null)
@@ -197,7 +200,7 @@ namespace GMCommands
 
             if (!byte.TryParse(args[1], out level)) return _commandDescriptions["setlevel"];
             if (!ulong.TryParse(args[2], out accountID)) nickname = args[2];
-            var targetPlr = accountID > 0 ? GameServer.Instance.Players.GetPlayerByID(accountID) : GameServer.Instance.Players.GetPlayerByNickname(nickname);
+            var targetPlr = accountID > 0 ? GameServer.GameServer.Instance.Players.GetPlayerByID(accountID) : GameServer.GameServer.Instance.Players.GetPlayerByNickname(nickname);
             if (targetPlr == null)
                 return HelperUtils.GetS4Color(255, 0, 0) + "Player not found.";
 
