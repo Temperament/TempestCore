@@ -1,6 +1,6 @@
 ﻿using Framework.Utils;
 
-namespace TempestCoreChat
+namespace ChatServer
 {
     public class ChatConfig : SingletonBase<ChatConfig>
     {

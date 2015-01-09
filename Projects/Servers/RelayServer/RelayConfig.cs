@@ -1,6 +1,6 @@
 ﻿using Framework.Utils;
 
-namespace TempestCoreRelay
+namespace RelayServer
 {
     public class RelayConfig : SingletonBase<RelayConfig>
     {

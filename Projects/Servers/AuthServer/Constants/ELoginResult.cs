@@ -1,4 +1,4 @@
-﻿namespace TempestCoreAuth
+﻿namespace AuthServer
 {
     enum ELoginResult
     {

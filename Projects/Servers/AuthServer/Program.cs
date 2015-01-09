@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TempestCoreAuth
+namespace AuthServer
 {
     class Program
     {

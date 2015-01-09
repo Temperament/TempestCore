@@ -11,7 +11,7 @@ using Framework.Network;
 using Framework.Network.Events;
 using Framework.Utils;
 
-namespace TempestCoreAuth
+namespace AuthServer
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class AuthServer : IAuthRemote
@@ -94,7 +94,7 @@ namespace TempestCoreAuth
                         Environment.Exit(1);
                         return;
                     }
-                    _remoteServer = new RemoteServer(this, ERemoteBinding.Pipe, string.Format("localhost/TempestCoreAuth/{0}/", SHA256.ComputeHash(AuthConfig.Instance.Remote.Password)));
+                    _remoteServer = new RemoteServer(this, ERemoteBinding.Pipe, string.Format("localhost/AuthServer/{0}/", SHA256.ComputeHash(AuthConfig.Instance.Remote.Password)));
                     break;
 
                 case "tcp":
@@ -104,11 +104,11 @@ namespace TempestCoreAuth
                         Environment.Exit(1);
                         return;
                     }
-                    _remoteServer = new RemoteServer(this, ERemoteBinding.Pipe, string.Format("{0}:{1}/TempestCoreAuth/{2}/", AuthConfig.Instance.Remote.Server, AuthConfig.Instance.Remote.Port, SHA256.ComputeHash(AuthConfig.Instance.Remote.Password)));
+                    _remoteServer = new RemoteServer(this, ERemoteBinding.Pipe, string.Format("{0}:{1}/AuthServer/{2}/", AuthConfig.Instance.Remote.Server, AuthConfig.Instance.Remote.Port, SHA256.ComputeHash(AuthConfig.Instance.Remote.Password)));
                     break;
 
                 case "http":
-                    _remoteServer = new RemoteServer(this, ERemoteBinding.Http, string.Format("{0}:{1}/TempestCoreAuth/{2}/", AuthConfig.Instance.Remote.Server, AuthConfig.Instance.Remote.Port, SHA256.ComputeHash(AuthConfig.Instance.Remote.Password)));
+                    _remoteServer = new RemoteServer(this, ERemoteBinding.Http, string.Format("{0}:{1}/AuthServer/{2}/", AuthConfig.Instance.Remote.Server, AuthConfig.Instance.Remote.Port, SHA256.ComputeHash(AuthConfig.Instance.Remote.Password)));
                     break;
 
                 default:

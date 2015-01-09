@@ -1,6 +1,6 @@
 ﻿using Framework.Utils;
 
-namespace TempestCoreAuth
+namespace AuthServer
 {
     public class AuthConfig : SingletonBase<AuthConfig>
     {
@@ -25,7 +25,7 @@ namespace TempestCoreAuth
             IP = "0.0.0.0";
             Port = 28002;
 
-            Remote = new Remote() { Binding = "root", Server = "127.0.0.1", Port = 27001, Password = "" };
+            Remote = new Remote() { Binding = "pipe", Server = "127.0.0.1", Port = 27001, Password = "" };
             MySQLAuth = new ConfigMySQL { Database = "tempestauth" };
         }
     }

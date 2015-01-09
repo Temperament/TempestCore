@@ -42,10 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthServer.cs" />
-    <Compile Include="ELoginResult.cs" />
-    <Compile Include="SSession.cs" />
-    <Compile Include="AuthConfig.cs" />
+    <Compile Include="Network\AuthServer.cs" />
+    <Compile Include="Constants\ELoginResult.cs" />
+    <Compile Include="Network\SSession.cs" />
+    <Compile Include="Configuration\AuthConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,6 +57,9 @@
       <Project>{eccf4ebf-8042-4007-ac89-17c09db162f0}</Project>
       <Name>Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Network\Packets\Handlers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

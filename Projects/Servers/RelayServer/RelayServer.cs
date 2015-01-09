@@ -10,7 +10,7 @@ using Framework.Network;
 using Framework.Network.Events;
 using Framework.Utils;
 
-namespace TempestCoreRelay
+namespace RelayServer
 {
     class RelayServer
     {

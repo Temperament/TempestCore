@@ -12,7 +12,7 @@ using Framework.Network;
 using Framework.Network.Events;
 using Framework.Utils;
 
-namespace TempestCoreChat
+namespace ChatServer
 {
     class ChatServer
     {
@@ -58,7 +58,7 @@ namespace TempestCoreChat
                         Environment.Exit(1);
                         return;
                     }
-                    _authRemoteClient = new RemoteClient(ERemoteBinding.Pipe, string.Format("localhost/TempestCoreAuth/{0}/", SHA256.ComputeHash(ChatConfig.Instance.AuthRemote.Password)));
+                    _authRemoteClient = new RemoteClient(ERemoteBinding.Pipe, string.Format("localhost/AuthServer/{0}/", SHA256.ComputeHash(ChatConfig.Instance.AuthRemote.Password)));
                     break;
 
                 case "tcp":
@@ -68,11 +68,11 @@ namespace TempestCoreChat
                         Environment.Exit(1);
                         return;
                     }
-                    _authRemoteClient = new RemoteClient(ERemoteBinding.Pipe, string.Format("{0}:{1}/TempestCoreAuth/{2}/", ChatConfig.Instance.AuthRemote.Server, ChatConfig.Instance.AuthRemote.Port, SHA256.ComputeHash(ChatConfig.Instance.AuthRemote.Password)));
+                    _authRemoteClient = new RemoteClient(ERemoteBinding.Pipe, string.Format("{0}:{1}/AuthServer/{2}/", ChatConfig.Instance.AuthRemote.Server, ChatConfig.Instance.AuthRemote.Port, SHA256.ComputeHash(ChatConfig.Instance.AuthRemote.Password)));
                     break;
 
                 case "http":
-                    _authRemoteClient = new RemoteClient(ERemoteBinding.Http, string.Format("{0}:{1}/TempestCoreAuth/{2}/", ChatConfig.Instance.AuthRemote.Server, ChatConfig.Instance.AuthRemote.Port, SHA256.ComputeHash(ChatConfig.Instance.AuthRemote.Password)));
+                    _authRemoteClient = new RemoteClient(ERemoteBinding.Http, string.Format("{0}:{1}/AuthServer/{2}/", ChatConfig.Instance.AuthRemote.Server, ChatConfig.Instance.AuthRemote.Port, SHA256.ComputeHash(ChatConfig.Instance.AuthRemote.Password)));
                     break;
 
                 default:
