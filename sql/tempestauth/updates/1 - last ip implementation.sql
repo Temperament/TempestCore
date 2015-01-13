@@ -1,0 +1,2 @@
+ALTER TABLE `accounts`
+	ADD COLUMN `last_ip` VARCHAR(15) NOT NULL DEFAULT '127.0.0.1' AFTER `Password`;

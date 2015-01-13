@@ -270,7 +270,11 @@ namespace AuthServer
             //TODO: Implement IP logging options to MySQL after failed handshaking attempts
 
             String[] userDetails = { username, password };
-            
+
+            // Update user's lastIP connected in auth
+            string ip_str = ip.ToString();
+            AuthDatabase.Instance.UpdateLastIP(ip_str,userDetails[0]);
+
             // Check if account exists
             if (!AuthDatabase.Instance.ValidateAccount(userDetails[0], userDetails[1]))
             {

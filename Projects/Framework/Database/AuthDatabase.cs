@@ -54,6 +54,18 @@ namespace Framework.Database
             }
         }
 
+        public void UpdateLastIP(string currentip, string username)
+        {
+            using (var con = GetConnection())
+            {
+                ulong ID = GetAccountID(username);
+                using (var cmd = BuildQuery(con, "UPDATE accounts SET last_ip=@currentip WHERE ID=@id", "@currentip", currentip, "@id", ID))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public bool IsAccountBanned(string name)
         {
             using (var con = GetConnection())
